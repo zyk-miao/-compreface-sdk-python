@@ -2,7 +2,8 @@ from compare_face import CompareFace
 
 compare = CompareFace("http://127.0.0.1", 8000)
 rec_service = compare.init_recognition_service('7496cc75-aa24-442c-bf2f-919687d3cfdd')
-
+detect_service = compare.init_detect_service('2e223f0a-824f-45ff-be55-fb84e55d0f3b')
+verify_service = compare.init_verify_service('4b7d94cb-ee6b-4fba-8078-0b7756fde74d')
 if __name__ == '__main__':
     # rv = rec_service.add_a_subject('张三')
 
@@ -11,11 +12,16 @@ if __name__ == '__main__':
     # rv = rec_service.delete_all_subjects()
     # rv = rec_service.get_all_subjects()
     # rv = rec_service.add_a_img('张玉凯', '1.jpg')
-    # rv=rec_service.list_all_subjects()
-    rv = rec_service.list_saved_img_subject(subject='张玉凯')
+    # rv = rec_service.list_all_subjects()
+    rv = rec_service.list_saved_img_subject()
     print(rv)
-    # rv=rec_service.delete_saved_img_subject()
+    # rv = rec_service.download_a_img('2de0cf28-61ce-4381-b588-0a2f4972454e')
+    # rv = rec_service.delete_saved_img_by_subject()
+    # print(rv)
     # rv = rec_service.delete_a_img('d5e91a1d-c63d-49ca-826b-3e9a4a96c5ae')
     # rv=rec_service.delete_multiple_img(['3d88de1c-4dc4-44da-aacc-eca3ed7b54bb','bfb0130d-c1aa-452a-8d3e-764908e7a3d3'])
-    with open('2.jpg', 'wb') as f:
-        f.write(rec_service.direct_download_img('2de0cf28-61ce-4381-b588-0a2f4972454e'))
+    # rv=rec_service.recognize('1.jpg')
+    # rv=rec_service.verify('2.jpg','2de0cf28-61ce-4381-b588-0a2f4972454e')
+    # rv = detect_service.detect('2.jpg')
+    rv = verify_service.verify('1.jpg', '2.jpg')
+    print(rv)

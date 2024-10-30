@@ -1,0 +1,5 @@
+SUBJECT_URL = '/api/v1/recognition/subjects'
+FACE_URL = '/api/v1/recognition/faces'
+RECOGNIZE_URL = '/api/v1/recognition/recognize'
+DETECT_URL = '/api/v1/detection/detect'
+VERIFY_URL = '/api/v1/verification/verify'

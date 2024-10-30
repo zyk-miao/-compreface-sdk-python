@@ -1,18 +1,17 @@
+import os.path
 import typing
+import uuid
 
 import httpx
-from distributed.utils_test import client
 
-from sever_list.recognition import SUBJECT_URL, FACE_URL
+from services.base_service import BaseService
+from services.server_api_list import SUBJECT_URL, FACE_URL, RECOGNIZE_URL
 
 
-class RecognitionService:
+class RecognitionService(BaseService):
     def __init__(self, api_key: str, server_prefix: str):
-        self._api_key = api_key
-        self._client: httpx.Client = httpx.Client(base_url=server_prefix, headers=
-        {
-            'x-api-key': self._api_key
-        })
+
+        super().__init__(api_key, server_prefix)
 
     def add_a_subject(self, subject: str) -> dict:
         rv = self._client.post(f'{SUBJECT_URL}', json={
@@ -46,15 +45,17 @@ class RecognitionService:
             }, files={'file': f})
             return rv.json()
 
-    def list_saved_img_subject(self, page: int = None, size: int = None, subject: str = None) -> dict:
-        rv = self._client.get(f'{FACE_URL}', params={
+    def list_saved_img_subject(self, page: int = 0, size: int = 10, subject: str = None) -> dict:
+        params = {
             'page': page,
             'size': size,
-            'subject': subject
-        })
+        }
+        if subject:
+            params['subject'] = subject
+        rv = self._client.get(f'{FACE_URL}', params=params)
         return rv.json()
 
-    def delete_saved_img_by_subject(self, subject: str = None):
+    def delete_saved_img_by_subject(self, subject: str):
         rv = self._client.delete(f'{FACE_URL}', params={
             'subject': subject
         })
@@ -68,6 +69,42 @@ class RecognitionService:
         rv = self._client.post(f'{FACE_URL}/delete', json=img)
         return rv.json()
 
-    def direct_download_img(self, img_id: str) -> bytes:
-        rv = self._client.get(f'{self._client.base_url}/api/v1/static/{self._api_key}/images/{img_id}')
-        return rv.content
+    def direct_download_img(self, img_id: str, save_path: str = None) -> str:
+        if not save_path:
+            save_path = f'{uuid.uuid4()}.jpg'
+        with open(save_path, 'wb') as f:
+            rv = self._client.get(f'{self._client.base_url}/api/v1/static/{self._api_key}/images/{img_id}')
+            f.write(rv.content)
+            return os.path.abspath(save_path)
+
+    def download_a_img(self, img_id: str, save_path: str = None) -> str:
+        if not save_path:
+            save_path = f'{uuid.uuid4()}.jpg'
+        with open(save_path, 'wb') as f:
+            rv = self._client.get(f'{FACE_URL}/{img_id}/img')
+            f.write(rv.content)
+            return os.path.abspath(save_path)
+
+    def recognize(self, img_path: str, limit: int = 0, threshold: float = None, prediction_count: int = 1,
+                  face_plugins: str = None, status: bool = False, detect_faces: bool = True) -> dict:
+        with open(img_path, 'rb') as f:
+            rv = self._client.post(f'{RECOGNIZE_URL}', params={
+                'limit': limit,
+                'threshold': threshold,
+                'prediction_count': prediction_count,
+                'face_plugins': face_plugins,
+                'status': status,
+                'detect_faces': detect_faces
+            }, files={'file': f})
+            return rv.json()
+
+    def verify(self, img_path: str, img_id: str, limit: int = 0, threshold: float = None, face_plugins: str = None,
+               status: bool = False) -> dict:
+        with open(img_path, 'rb') as f:
+            rv = self._client.post(f'{FACE_URL}/{img_id}/verify', params={
+                'limit': limit,
+                'threshold': threshold,
+                'face_plugins': face_plugins,
+                'status': status,
+            }, files={'file': f})
+            return rv.json()
