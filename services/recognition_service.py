@@ -45,6 +45,13 @@ class RecognitionService(BaseService):
             }, files={'file': f})
             return rv.json()
 
+    def add_a_img_by_64(self, subject: str, img64: str, threshold: float = None) -> dict:
+        rv = self._client.post(f'{FACE_URL}', params={
+            'subject': subject,
+            'threshold': threshold
+        }, json={'file': img64})
+        return rv.json()
+
     def list_saved_img_subject(self, page: int = 0, size: int = 10, subject: str = None) -> dict:
         params = {
             'page': page,
@@ -98,6 +105,18 @@ class RecognitionService(BaseService):
             }, files={'file': f})
             return rv.json()
 
+    def recognize_by_64(self, img64: str, limit: int = 0, threshold: float = None, prediction_count: int = 1,
+                  face_plugins: str = None, status: bool = False, detect_faces: bool = True) -> dict:
+        rv = self._client.post(f'{RECOGNIZE_URL}', params={
+            'limit': limit,
+            'threshold': threshold,
+            'prediction_count': prediction_count,
+            'face_plugins': face_plugins,
+            'status': status,
+            'detect_faces': detect_faces
+        }, json={'file': img64})
+        return rv.json()
+
     def verify(self, img_path: str, img_id: str, limit: int = 0, threshold: float = None, face_plugins: str = None,
                status: bool = False) -> dict:
         with open(img_path, 'rb') as f:
@@ -108,3 +127,13 @@ class RecognitionService(BaseService):
                 'status': status,
             }, files={'file': f})
             return rv.json()
+
+    def verify_by_64(self, img_64: str, img_id: str, limit: int = 0, threshold: float = None, face_plugins: str = None,
+                     status: bool = False) -> dict:
+        rv = self._client.post(f'{FACE_URL}/{img_id}/verify', params={
+            'limit': limit,
+            'threshold': threshold,
+            'face_plugins': face_plugins,
+            'status': status,
+        }, json={'file': img_64})
+        return rv.json()

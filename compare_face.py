@@ -1,4 +1,4 @@
-from services.detect_service import DetectionService
+from services.detection_service import DetectionService
 from services.recognition_service import RecognitionService
 from services.verification_service import VerificationService
 

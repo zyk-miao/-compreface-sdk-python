@@ -1,3 +1,5 @@
+import base64
+
 from compare_face import CompareFace
 
 compare = CompareFace("http://127.0.0.1", 8000)
@@ -23,5 +25,11 @@ if __name__ == '__main__':
     # rv=rec_service.recognize('1.jpg')
     # rv=rec_service.verify('2.jpg','2de0cf28-61ce-4381-b588-0a2f4972454e')
     # rv = detect_service.detect('2.jpg')
-    rv = verify_service.verify('1.jpg', '2.jpg')
+    # rv = verify_service.verify('1.jpg', '2.jpg')
+    img64 = base64.b64encode(open('1.jpg', 'rb').read()).decode('utf-8')
+    # rv = rec_service.add_a_img_by_64('zs', base64.b64encode(open('1.jpg','rb').read()).decode('utf-8'))
+    # rv=rec_service.recognize_by_64(img64)
+    # rv=rec_service.verify_by_64(img64,'75cd0778-bfa1-4288-a4ea-c26c4758e6f7')
+    # rv=detect_service.detect_by_64(img64)
+    rv=verify_service.verify_by_64(img64, img64)
     print(rv)
