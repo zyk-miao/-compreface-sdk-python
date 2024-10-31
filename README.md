@@ -2,6 +2,7 @@
 
 https://github.com/exadel-inc/CompreFace  Python SDK
 
+according to https://github.com/exadel-inc/CompreFace/blob/master/docs/Rest-API-description.md
 # Installation
 
 It can be installed through pip:
