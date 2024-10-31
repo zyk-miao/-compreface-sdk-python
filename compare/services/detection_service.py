@@ -1,7 +1,5 @@
-import httpx
-
-from services.base_service import BaseService
-from services.server_api_list import DETECT_URL
+from compare.services.base_service import BaseService
+from compare.services.server_api_list import DETECT_URL
 
 
 class DetectionService(BaseService):

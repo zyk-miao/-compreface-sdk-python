@@ -1,6 +1,6 @@
 import base64
 
-from compare_face import CompareFace
+from compare.core.compare_face import CompareFace
 
 compare = CompareFace("http://127.0.0.1", 8000)
 rec_service = compare.init_recognition_service('7496cc75-aa24-442c-bf2f-919687d3cfdd')

@@ -1,7 +1,5 @@
-import httpx
-
-from services.base_service import BaseService
-from services.server_api_list import VERIFY_URL
+from compare.services.base_service import BaseService
+from compare.services.server_api_list import VERIFY_URL
 
 
 class VerificationService(BaseService):
