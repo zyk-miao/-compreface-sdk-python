@@ -31,7 +31,7 @@ class RecognitionService(BaseService):
         rv = self._client.delete(f'{SUBJECT_URL}')
         return rv.json()
 
-    def list_all_subjects(self):
+    def list_all_subjects(self)->dict:
         rv = self._client.get(f'{SUBJECT_URL}')
         return rv.json()
 
@@ -60,7 +60,7 @@ class RecognitionService(BaseService):
         rv = self._client.get(f'{FACE_URL}', params=params)
         return rv.json()
 
-    def delete_saved_img_by_subject(self, subject: str):
+    def delete_saved_img_by_subject(self, subject: str)->dict:
         rv = self._client.delete(f'{FACE_URL}', params={
             'subject': subject
         })
