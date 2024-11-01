@@ -1,7 +1,7 @@
 # compreface-sdk-python
 
 https://github.com/exadel-inc/CompreFace  Python SDK
-
+Support async
 according to https://github.com/exadel-inc/CompreFace/blob/master/docs/Rest-API-description.md
 # Installation
 
