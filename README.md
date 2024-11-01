@@ -15,8 +15,10 @@ pip install compreface-sdk-python
 you need the Compreface application. For more details, please refer to https://github.com/exadel-inc/CompreFace.
 Then you need to create some service API key from your application
 ```python
-from core.compare_face import CompareFace
-from services import RecognitionService, DetectionService, VerificationService
+from compare.core.compare_face import CompareFace
+from compare.services.recognition_service import AsyncRecognitionService,RecognitionService
+from compare.services.detection_service import DetectionService,AsyncDetectionService
+from compare.services.verification_service import VerificationService,AsyncVerificationService
 
 DOMAIN: str = 'http://127.0.0.1'
 PORT: int = 8000
@@ -26,7 +28,10 @@ compare: CompareFace = CompareFace("DOMAIN", PORT)
 rec_service: RecognitionService = compare.init_recognition_service('your_face_recognition_service_key')
 detect_service: DetectionService = compare.init_detect_service('your_detection_service_key')
 verify_service: VerificationService = compare.init_verify_service('your_verification_service_key')
-
+# async service
+rec_service: AsyncRecognitionService = compare.init_async_recognition_service('your_face_recognition_service_key')
+detect_service: AsyncDetectionService = compare.init_async_detect_service('your_detection_service_key')
+verify_service: AsyncVerificationService = compare.init_async_verify_service('your_verification_service_key')
 # some example
 
 # Add a Subject
