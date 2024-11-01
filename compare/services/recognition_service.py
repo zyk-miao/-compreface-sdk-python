@@ -2,8 +2,8 @@ import os.path
 import typing
 import uuid
 
-from compare.services.base_service import BaseService
-from compare.services.server_api_list import SUBJECT_URL, FACE_URL, RECOGNIZE_URL
+from services.base_service import BaseService
+from services.server_api_list import SUBJECT_URL, FACE_URL, RECOGNIZE_URL
 
 
 class RecognitionService(BaseService):
