@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as f:
 
 setup(
     name="compreface-sdk-python",  # 包名
-    version="1.0.3",  # 版本号
+    version="1.0.4",  # 版本号
     author="yukai bill",  # 作者
     author_email="yukaibill@gmail.com",  # 作者邮箱
     description="'CompareFace Python SDK",  # 简短描述

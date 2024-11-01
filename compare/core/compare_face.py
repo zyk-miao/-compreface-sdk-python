@@ -1,6 +1,4 @@
-from compare.services.detection_service import DetectionService
-from compare.services.recognition_service import RecognitionService
-from compare.services.verification_service import VerificationService
+from services import RecognitionService, DetectionService, VerificationService
 
 
 class CompareFace:
